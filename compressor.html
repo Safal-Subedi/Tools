@@ -24,7 +24,7 @@
         .download-link { color: #limegreen; text-decoration: none; font-weight: bold; }
         #compressionValue { font-size: 1em; margin: 5px 0; }
         footer { text-align: center; padding: 20px; background: #32cd32; color: white; border-top: 3px solid #limegreen; }
-        @media (max-width: 768px) { nav a { display: block; margin: 10px 0; } }
+        @media (max-width: 768px) { nav a { display: block; margin: 10px 0; } .ad-space { padding: 15px; } }
     </style>
 </head>
 <body>
@@ -40,14 +40,12 @@
     </nav>
     <div class="container">
         <div class="ad-space">
-            <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX"
+            <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8469839593145584"
                  crossorigin="anonymous"></script>
             <ins class="adsbygoogle"
-                 style="display:block"
-                 data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
-                 data-ad-slot="YYYYYYYYYY"
-                 data-ad-format="auto"
-                 data-full-width-responsive="true"></ins>
+                 style="display:inline-block;width:728px;height:90px"
+                 data-ad-client="ca-pub-8469839593145584"
+                 data-ad-slot="9079040983"></ins>
             <script>
                  (adsbygoogle = window.adsbygoogle || []).push({});
             </script>
@@ -70,7 +68,6 @@
         const slider = document.getElementById('compressionLevel');
         const compressionValue = document.getElementById('compressionValue');
 
-        // Update displayed value when slider moves
         slider.addEventListener('input', function() {
             compressionValue.textContent = `${slider.value}%`;
         });
@@ -87,13 +84,12 @@
             }
 
             const file = fileInput.files[0];
-            const originalSize = (file.size / 1024).toFixed(2); // Size in KB
-            const compressionFactor = (100 - compressionPercent) / 100; // 0% = no reduction, 100% = full reduction
+            const originalSize = (file.size / 1024).toFixed(2);
+            const compressionFactor = (100 - compressionPercent) / 100;
             const compressedSize = (originalSize * compressionFactor).toFixed(2);
 
             result.innerText = `Original size: ${originalSize} KB | Simulated compressed size: ${compressedSize} KB (${compressionPercent}% reduction)`;
 
-            // Use FileReader to preserve original file content
             const reader = new FileReader();
             reader.onload = function(e) {
                 const originalContent = e.target.result;
@@ -108,7 +104,7 @@
                 downloadLink.style.display = 'block';
                 downloadLink.innerText = `Download ${newFileName}`;
             };
-            reader.readAsArrayBuffer(file); // Preserve binary data
+            reader.readAsArrayBuffer(file);
         }
     </script>
 </body>
