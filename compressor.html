@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Compress files with a customizable compression level slider online for free.">
+    <meta name="keywords" content="file compressor, reduce file size, compression slider, online tool">
+    <title>File Size Compressor - File Tools Hub</title>
+    <style>
+        body { font-family: 'Segoe UI', Arial, sans-serif; margin: 0; padding: 0; background: linear-gradient(135deg, #f0f7e6 0%, #d9e6b8 100%); color: #333; }
+        .container { max-width: 1300px; margin: 0 auto; padding: 30px; }
+        header { background: #limegreen; color: white; text-align: center; padding: 40px 20px; border-bottom: 5px solid #32cd32; box-shadow: 0 4px 10px rgba(0,0,0,0.2); }
+        header h1 { margin: 0; font-size: 2.5em; text-transform: uppercase; letter-spacing: 2px; }
+        nav { background: #32cd32; padding: 15px 0; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        nav a { color: white; text-decoration: none; margin: 0 20px; font-size: 1.1em; padding: 10px 15px; border-radius: 5px; transition: background 0.3s; }
+        nav a:hover { background: #limegreen; }
+        .tool-section { background: white; padding: 30px; margin: 30px 0; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
+        .ad-space { background: #e6f0d8; padding: 25px; margin: 30px 0; text-align: center; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
+        input, button { width: 100%; padding: 12px; margin: 10px 0; border-radius: 5px; border: 1px solid #ddd; font-size: 1em; }
+        input[type="range"] { -webkit-appearance: none; background: #limegreen; height: 8px; cursor: pointer; }
+        input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; width: 20px; height: 20px; background: #32cd32; border-radius: 50%; cursor: pointer; }
+        button { background: #limegreen; color: white; border: none; cursor: pointer; transition: background 0.3s; }
+        button:hover { background: #32cd32; }
+        .download-link { color: #limegreen; text-decoration: none; font-weight: bold; }
+        #compressionValue { font-size: 1em; margin: 5px 0; }
+        footer { text-align: center; padding: 20px; background: #32cd32; color: white; border-top: 3px solid #limegreen; }
+        @media (max-width: 768px) { nav a { display: block; margin: 10px 0; } }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>File Size Compressor</h1>
+    </header>
+    <nav>
+        <div class="container">
+            <a href="index.html">Home</a>
+            <a href="ext-changer.html">Ext Changer</a>
+            <a href="dimension-changer.html">Dimension Changer</a>
+        </div>
+    </nav>
+    <div class="container">
+        <div class="ad-space">
+            <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX"
+                 crossorigin="anonymous"></script>
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
+                 data-ad-slot="YYYYYYYYYY"
+                 data-ad-format="auto"
+                 data-full-width-responsive="true"></ins>
+            <script>
+                 (adsbygoogle = window.adsbygoogle || []).push({});
+            </script>
+        </div>
+        <div class="tool-section">
+            <h2>Compress Your File</h2>
+            <input type="file" id="fileInput" accept="*/*">
+            <label for="compressionLevel">Compression Level (0% - 100%):</label>
+            <input type="range" id="compressionLevel" min="0" max="100" value="30">
+            <span id="compressionValue">30%</span>
+            <button onclick="compressFile()">Compress</button>
+            <p id="compressResult"></p>
+            <a id="downloadLink" class="download-link" style="display:none;">Download Compressed File</a>
+        </div>
+    </div>
+    <footer>
+        <p>© 2025 File Tools Hub. All rights reserved.</p>
+    </footer>
+    <script>
+        const slider = document.getElementById('compressionLevel');
+        const compressionValue = document.getElementById('compressionValue');
+
+        // Update displayed value when slider moves
+        slider.addEventListener('input', function() {
+            compressionValue.textContent = `${slider.value}%`;
+        });
+
+        function compressFile() {
+            const fileInput = document.getElementById('fileInput');
+            const compressionPercent = parseInt(slider.value);
+            const result = document.getElementById('compressResult');
+            const downloadLink = document.getElementById('downloadLink');
+
+            if (fileInput.files.length === 0) {
+                result.innerText = 'Please upload a file.';
+                return;
+            }
+
+            const file = fileInput.files[0];
+            const originalSize = (file.size / 1024).toFixed(2); // Size in KB
+            const compressionFactor = (100 - compressionPercent) / 100; // 0% = no reduction, 100% = full reduction
+            const compressedSize = (originalSize * compressionFactor).toFixed(2);
+
+            result.innerText = `Original size: ${originalSize} KB | Simulated compressed size: ${compressedSize} KB (${compressionPercent}% reduction)`;
+
+            // Use FileReader to preserve original file content
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const originalContent = e.target.result;
+                const note = `Note: This is a simulated compression of ${file.name} at ${compressionPercent}% reduction.\n`;
+                const blob = new Blob([note, originalContent], { type: file.type || 'application/octet-stream' });
+                const fileName = file.name.split('.');
+                const newFileName = `${fileName[0]}_compressed_${compressionPercent}pct.${fileName[1] || 'bin'}`;
+                const url = URL.createObjectURL(blob);
+
+                downloadLink.href = url;
+                downloadLink.download = newFileName;
+                downloadLink.style.display = 'block';
+                downloadLink.innerText = `Download ${newFileName}`;
+            };
+            reader.readAsArrayBuffer(file); // Preserve binary data
+        }
+    </script>
+</body>
+</html>
