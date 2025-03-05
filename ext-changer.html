@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Change file extensions for single or multiple files online.">
+    <meta name="keywords" content="extension changer, file converter, batch extension, online tool">
+    <title>File Extension Changer - File Tools Hub</title>
+    <style>
+        body { font-family: 'Segoe UI', Arial, sans-serif; margin: 0; padding: 0; background: linear-gradient(135deg, #f0f7e6 0%, #d9e6b8 100%); color: #333; }
+        .container { max-width: 1300px; margin: 0 auto; padding: 30px; }
+        header { background: #limegreen; color: white; text-align: center; padding: 40px 20px; border-bottom: 5px solid #32cd32; box-shadow: 0 4px 10px rgba(0,0,0,0.2); }
+        header h1 { margin: 0; font-size: 2.5em; text-transform: uppercase; letter-spacing: 2px; }
+        nav { background: #32cd32; padding: 15px 0; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        nav a { color: white; text-decoration: none; margin: 0 20px; font-size: 1.1em; padding: 10px 15px; border-radius: 5px; transition: background 0.3s; }
+        nav a:hover { background: #limegreen; }
+        .tool-section { background: white; padding: 30px; margin: 30px 0; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
+        .ad-space { background: #e6f0d8; padding: 25px; margin: 30px 0; text-align: center; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
+        input, button { width: 100%; padding: 12px; margin: 10px 0; border-radius: 5px; border: 1px solid #ddd; font-size: 1em; }
+        button { background: #limegreen; color: white; border: none; cursor: pointer; transition: background 0.3s; }
+        button:hover { background: #32cd32; }
+        .download-link { color: #limegreen; text-decoration: none; font-weight: bold; margin: 5px 0; display: block; }
+        footer { text-align: center; padding: 20px; background: #32cd32; color: white; border-top: 3px solid #limegreen; }
+        @media (max-width: 768px) { nav a { display: block; margin: 10px 0; } }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>File Extension Changer</h1>
+    </header>
+    <nav>
+        <div class="container">
+            <a href="index.html">Home</a>
+            <a href="compressor.html">Compressor</a>
+            <a href="dimension-changer.html">Dimension Changer</a>
+        </div>
+    </nav>
+    <div class="container">
+        <div class="ad-space">
+            <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX"
+                 crossorigin="anonymous"></script>
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
+                 data-ad-slot="YYYYYYYYYY"
+                 data-ad-format="auto"
+                 data-full-width-responsive="true"></ins>
+            <script>
+                 (adsbygoogle = window.adsbygoogle || []).push({});
+            </script>
+        </div>
+        <div class="tool-section">
+            <h2>Change File Extensions</h2>
+            <input type="file" id="fileInput" accept="*/*" multiple>
+            <input type="text" id="newExt" placeholder="New extension (e.g., pdf)">
+            <button onclick="changeExt()">Change Extensions</button>
+            <p id="extResult"></p>
+            <div id="downloadLinks"></div>
+        </div>
+    </div>
+    <footer>
+        <p>© 2025 File Tools Hub. All rights reserved.</p>
+    </footer>
+    <script>
+        function changeExt() {
+            const fileInput = document.getElementById('fileInput');
+            const newExt = document.getElementById('newExt').value.trim();
+            const result = document.getElementById('extResult');
+            const downloadLinks = document.getElementById('downloadLinks');
+
+            if (fileInput.files.length === 0 || !newExt) {
+                result.innerText = 'Please upload at least one file and enter a new extension.';
+                downloadLinks.innerHTML = '';
+                return;
+            }
+
+            result.innerText = 'New file names:';
+            downloadLinks.innerHTML = '';
+
+            Array.from(fileInput.files).forEach(file => {
+                const newName = file.name.replace(/\.[^/.]+$/, "") + '.' + newExt;
+                result.innerText += `\n- ${newName}`;
+
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const originalContent = e.target.result;
+                    const note = `Note: This is a simulated extension change for ${file.name} to ${newExt}.\n`;
+                    const blob = new Blob([note, originalContent], { type: file.type || 'application/octet-stream' });
+                    const url = URL.createObjectURL(blob);
+
+                    const link = document.createElement('a');
+                    link.href = url;
+                    link.download = newName;
+                    link.className = 'download-link';
+                    link.innerText = `Download ${newName}`;
+                    downloadLinks.appendChild(link);
+                };
+                reader.readAsArrayBuffer(file); // Preserve binary data
+            });
+        }
+    </script>
+</body>
+</html>
