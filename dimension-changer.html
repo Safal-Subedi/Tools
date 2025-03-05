@@ -22,7 +22,7 @@
         .download-link { color: #limegreen; text-decoration: none; font-weight: bold; }
         #preview { max-width: 100%; margin: 10px 0; border: 1px solid #ddd; border-radius: 5px; }
         footer { text-align: center; padding: 20px; background: #32cd32; color: white; border-top: 3px solid #limegreen; }
-        @media (max-width: 768px) { nav a { display: block; margin: 10px 0; } }
+        @media (max-width: 768px) { nav a { display: block; margin: 10px 0; } .ad-space { padding: 15px; } }
     </style>
 </head>
 <body>
@@ -38,14 +38,12 @@
     </nav>
     <div class="container">
         <div class="ad-space">
-            <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX"
+            <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8469839593145584"
                  crossorigin="anonymous"></script>
             <ins class="adsbygoogle"
-                 style="display:block"
-                 data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
-                 data-ad-slot="YYYYYYYYYY"
-                 data-ad-format="auto"
-                 data-full-width-responsive="true"></ins>
+                 style="display:inline-block;width:728px;height:90px"
+                 data-ad-client="ca-pub-8469839593145584"
+                 data-ad-slot="6452877641"></ins>
             <script>
                  (adsbygoogle = window.adsbygoogle || []).push({});
             </script>
@@ -73,12 +71,10 @@
             const preview = document.getElementById('preview');
             const downloadLink = document.getElementById('downloadLink');
 
-            // Reset UI
             result.innerText = '';
             preview.style.display = 'none';
             downloadLink.style.display = 'none';
 
-            // Validation
             if (fileInput.files.length === 0) {
                 result.innerText = 'Please upload an image.';
                 return;
@@ -94,7 +90,6 @@
                 return;
             }
 
-            // Load image and resize
             const img = new Image();
             const reader = new FileReader();
 
@@ -105,18 +100,14 @@
                     const canvas = document.createElement('canvas');
                     const ctx = canvas.getContext('2d');
 
-                    // Set canvas dimensions
                     canvas.width = newWidth;
                     canvas.height = newHeight;
 
-                    // Draw resized image
                     ctx.drawImage(img, 0, 0, newWidth, newHeight);
 
-                    // Update preview
                     preview.src = canvas.toDataURL(file.type);
                     preview.style.display = 'block';
 
-                    // Generate downloadable file with correct MIME type
                     canvas.toBlob(function(blob) {
                         const fileName = file.name.split('.');
                         const newFileName = `${fileName[0]}_${newWidth}x${newHeight}.${fileName[1] || 'jpg'}`;
@@ -128,7 +119,7 @@
                         downloadLink.innerText = `Download ${newFileName}`;
 
                         result.innerText = `Resized ${file.name} to ${newWidth}x${newHeight}px`;
-                    }, file.type); // Use original image MIME type
+                    }, file.type);
                 };
             };
 
